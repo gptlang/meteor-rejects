@@ -43,24 +43,19 @@ public class LocateCommand extends Command {
 					long seed = Seeds.get().getSeed().seed;
 					MCVersion version = Seeds.get().getSeed().version;
 					Cubiomes.MCVersion cubiomesVersion = null;
-					if (version.isNewerOrEqualTo(MCVersion.v1_20)) {
-						cubiomesVersion = Cubiomes.MCVersion.MC_1_20;
+					if (version.isNewerOrEqualTo(MCVersion.v1_21)) {
+						cubiomesVersion = Cubiomes.MCVersion.MC_1_21_1;
+					} else if (version.isNewerOrEqualTo(MCVersion.v1_20)) {
+						cubiomesVersion = Cubiomes.MCVersion.MC_1_20_6;
 					} else if (version.isNewerOrEqualTo(MCVersion.v1_19)) {
-						switch (version) {
-							case v1_19:
-							case v1_19_1:
-								cubiomesVersion = Cubiomes.MCVersion.MC_1_19;
-								break;
-							case v1_19_2:
-							case v1_19_3:
-							case v1_19_4:
-								cubiomesVersion = Cubiomes.MCVersion.MC_1_19_2;
-								break;
-							default:
-								throw new IllegalStateException("Unexpected value: " + version);
-						}
+                        cubiomesVersion = switch (version) {
+                            case v1_19, v1_19_1, v1_19_2, v1_19_3 -> Cubiomes.MCVersion.MC_1_19_2;
+                            case v1_19_4 -> Cubiomes.MCVersion.MC_1_19_4;
+                            default ->
+                                    throw new IllegalStateException("Unexpected value: " + version);
+                        };
 					} else if (version.isNewerOrEqualTo(MCVersion.v1_18)) {
-						cubiomesVersion = Cubiomes.MCVersion.MC_1_18;
+						cubiomesVersion = Cubiomes.MCVersion.MC_1_18_2;
 					}
 					Pos pos = null;
 					if (cubiomesVersion != null) {
